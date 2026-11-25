@@ -1,0 +1,17 @@
+services:
+  deskthing:
+    build: .
+    container_name: deskthing
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${PORT:-8080}:8080"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: "8080"
+      DATA_DIR: /app/data
+    volumes:
+      # holds spotify-token.json (written by `npm run spotify-auth`)
+      - ./data:/app/data

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>DeskThing</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="page">
+  <div id="top">
+    <div id="clock">--:--</div>
+    <div id="date">&nbsp;</div>
+  </div>
+
+  <div id="card">
+    <div id="now" class="is-paused" style="display:none">
+      <div id="cover-box"><img id="cover" alt="" width="140" height="140" style="visibility:hidden"></div>
+      <div id="meta">
+        <div id="play-state">Now playing</div>
+        <div id="title"></div>
+        <div id="artist"></div>
+        <div id="album"></div>
+        <div id="progress"><div id="bar"></div></div>
+        <div id="times"><span id="elapsed"></span><span id="duration"></span></div>
+      </div>
+    </div>
+    <div id="empty">Loading&hellip;</div>
+  </div>
+
+  <div id="conn" class="conn-wait"><span class="dot"></span><span id="conn-text">Connecting</span></div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

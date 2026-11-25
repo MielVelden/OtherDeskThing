@@ -1,0 +1,15 @@
+{
+  "name": "deskthing",
+  "version": "1.0.0",
+  "description": "Shows your current Spotify song on an iPod Touch 3rd gen (iOS 5.1.1) over plain HTTP",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env server.js",
+    "spotify-auth": "node --env-file-if-exists=.env spotify-auth.js"
+  },
+  "engines": {
+    "node": ">=22.9"
+  },
+  "license": "MIT"
+}
