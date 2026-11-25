@@ -6,7 +6,7 @@ ENV NODE_ENV=production \
     PORT=8080 \
     DATA_DIR=/app/data
 
-COPY package.json server.js spotify.js spotify-auth.js ./
+COPY package.json server.js spotify.js spotify-auth.js lab.js weather.js ./
 COPY public ./public
 RUN mkdir -p /app/data && chown node:node /app/data
 

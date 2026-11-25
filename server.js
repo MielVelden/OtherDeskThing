@@ -7,6 +7,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const spotify = require('./spotify');
+const labStats = require('./lab');
+const weatherFeed = require('./weather');
 
 const PORT = parseInt(process.env.PORT, 10) || 8080;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -61,7 +63,10 @@ function snapshot() {
     version: state.version,
     serverTime: Date.now(),
     spotify: state.spotify,
-    track: publicTrack(state.track)
+    track: publicTrack(state.track),
+    lab: lab,
+    weather: wx.weather,
+    weatherError: wx.error
   };
 }
 
@@ -80,6 +85,11 @@ function changed() {
   });
   pollWaiters.clear();
 }
+
+// Homelab stats tick every 5 s (CPU changes constantly, so each tick is a push);
+// weather pushes when it refreshes (every 10 min).
+const lab = labStats.create(changed);
+const wx = weatherFeed.create(changed);
 
 // Heartbeats are normal "message" events without a version (simplest thing that
 // definitely works in old WebKit). They also carry serverTime for the clock.

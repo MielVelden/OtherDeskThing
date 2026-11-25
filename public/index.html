@@ -7,31 +7,93 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
 <title>DeskThing</title>
+<link rel="apple-touch-icon-precomposed" href="/img/apple-touch-icon.png">
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div id="page">
-  <div id="top">
-    <div id="clock">--:--</div>
-    <div id="date">&nbsp;</div>
-  </div>
 
-  <div id="card">
-    <div id="now" class="is-paused" style="display:none">
-      <div id="cover-box"><img id="cover" alt="" width="140" height="140" style="visibility:hidden"></div>
-      <div id="meta">
-        <div id="play-state">Now playing</div>
-        <div id="title"></div>
-        <div id="artist"></div>
-        <div id="album"></div>
-        <div id="progress"><div id="bar"></div></div>
-        <div id="times"><span id="elapsed"></span><span id="duration"></span></div>
+<!-- Menu bar: each menu brings its window(s) to the front; selected = inverted. -->
+<div id="menubar">
+  <span id="logo"><img src="/img/logo.png" alt="M" width="16" height="16"></span>
+  <a class="menu" id="menu-music" href="#music">Music</a>
+  <a class="menu" id="menu-lab" href="#lab">Lab</a>
+  <a class="menu" id="menu-weather" href="#weather">Weather</a>
+  <div id="menu-right"><span id="conn" class="conn-wait"></span><span id="clock">--:--</span></div>
+</div>
+
+<!-- The desktop: every window always exists. In landscape they overlap and the
+     front group is on top; tapping a window behind brings its group forward.
+     DOM order = initial stacking (weather at the back, music in front). -->
+<div id="desk">
+
+  <!-- ===================== Weather ===================== -->
+  <div class="win back" id="win-wx">
+    <div class="tb"><div class="stripes"></div><span class="close"></span><span class="tt" id="wx-place">Weather</span></div>
+    <div class="wb butter">
+      <div id="wx-now">
+        <img id="wx-icon" alt="" width="64" height="64" style="visibility:hidden">
+        <div id="wx-temp">&ndash;</div>
+        <div id="wx-label">&nbsp;</div>
       </div>
+      <table class="kv">
+        <tr><th>Feels like</th><td id="wx-feels">&ndash;</td></tr>
+        <tr><th>Wind</th><td id="wx-wind">&ndash;</td></tr>
+        <tr><th>Humidity</th><td id="wx-humidity">&ndash;</td></tr>
+      </table>
+      <div id="wx-error" class="balloon small" style="display:none"></div>
     </div>
-    <div id="empty">Loading&hellip;</div>
   </div>
 
-  <div id="conn" class="conn-wait"><span class="dot"></span><span id="conn-text">Connecting</span></div>
+  <div class="win back" id="win-fc">
+    <div class="tb"><div class="stripes"></div><span class="close"></span><span class="tt">Forecast</span></div>
+    <div class="wb mint">
+      <div id="wx-days"></div>
+      <div id="wx-updated">&nbsp;</div>
+    </div>
+  </div>
+
+  <!-- ===================== Lab ===================== -->
+  <div class="win back" id="win-mac">
+    <div class="tb"><div class="stripes"></div><span class="close"></span><span class="tt" id="lab-host">Mac mini</span></div>
+    <div class="wb salmon">
+      <table class="kv">
+        <tr><th>Uptime</th><td id="lab-uptime">&ndash;</td></tr>
+        <tr><th>CPU</th><td><div class="meter"><div id="lab-cpu-bar" class="fill"></div></div><span id="lab-cpu">&ndash;</span></td></tr>
+        <tr><th>Load</th><td id="lab-load">&ndash;</td></tr>
+        <tr><th>Temp</th><td><div class="meter"><div id="lab-temp-bar" class="fill"></div></div><span id="lab-temp">&ndash;</span></td></tr>
+      </table>
+      <div id="lab-note" class="balloon small" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="win back" id="win-docker">
+    <div class="tb"><div class="stripes"></div><span class="close"></span><span class="tt">Docker</span></div>
+    <div class="wb lavender">
+      <div id="docker-summary">&nbsp;</div>
+      <div id="docker-list" class="list"></div>
+      <div id="docker-error" class="balloon small" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- ===================== Music ===================== -->
+  <div class="win" id="win-music">
+    <div class="tb"><div class="stripes"></div><span class="close"></span><span class="tt">Now Playing</span></div>
+    <div class="wb sky">
+      <div id="now" style="display:none">
+        <div id="cover-frame"><img id="cover" alt="" width="120" height="120" style="visibility:hidden"></div>
+        <div id="meta">
+          <div id="play-state" class="tag">Playing</div>
+          <div id="title"></div>
+          <div id="artist"></div>
+          <div id="album"></div>
+          <div class="meter"><div id="bar" class="fill"></div></div>
+          <div id="times"><span id="elapsed"></span><span id="duration"></span></div>
+        </div>
+      </div>
+      <div id="music-empty" class="balloon">Loading&hellip;</div>
+    </div>
+  </div>
+
 </div>
 <script src="/app.js"></script>
 </body>

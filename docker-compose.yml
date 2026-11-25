@@ -15,3 +15,5 @@ services:
     volumes:
       # holds spotify-token.json (written by `npm run spotify-auth`)
       - ./data:/app/data
+      # Lab tab: container status. Note: socket access is root-equivalent on the host.
+      # - /var/run/docker.sock:/var/run/docker.sock:ro
