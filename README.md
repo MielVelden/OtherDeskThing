@@ -136,6 +136,7 @@ public/
 tools/
   make-assets.py   Pixel-art pipeline (stdlib-only PNG encoder)
 Dockerfile, docker-compose.yml
+.github/workflows/  CI: multi-arch image to GHCR on every push to main
 ```
 
 About 2,400 lines in total, with no runtime or build dependencies.
@@ -158,7 +159,6 @@ About 2,400 lines in total, with no runtime or build dependencies.
    ```bash
    npm start
    ```
-   Run it natively for real host stats; inside a container, Node only sees the Docker VM. `docker compose up -d --build` also works for the Music and Weather windows.
 3. **Open it on the device.** Browse to `http://<server-LAN-IP>:8080`, then use **Add to Home Screen** for full-screen landscape. Add `#lab` or `#weather` to the URL to choose the starting group, or `?poll=1` to force the polling fallback.
 
 | Variable | Default | |

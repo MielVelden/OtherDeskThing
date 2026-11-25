@@ -1,6 +1,9 @@
+# Pulls the image GitHub Actions builds on every push to main; Watchtower
+# (with WATCHTOWER_LABEL_ENABLE=true) picks up new :latest images automatically.
+# For a local build instead: `docker build -t ghcr.io/mielvelden/deskthing:latest .`
 services:
   deskthing:
-    build: .
+    image: ghcr.io/mielvelden/deskthing:latest
     container_name: deskthing
     restart: unless-stopped
     init: true
@@ -12,8 +15,16 @@ services:
     environment:
       PORT: "8080"
       DATA_DIR: /app/data
+    # The Docker socket is root:root 0660 inside containers; the app runs as
+    # the unprivileged `node` user, so give it group 0 to read container status.
+    # Note: socket access is root-equivalent on the Docker host.
+    group_add:
+      - "0"
     volumes:
-      # holds spotify-token.json (written by `npm run spotify-auth`)
-      - ./data:/app/data
-      # Lab tab: container status. Note: socket access is root-equivalent on the host.
-      # - /var/run/docker.sock:/var/run/docker.sock:ro
+      - deskthing-data:/app/data            # spotify-token.json (survives updates)
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - com.centurylinklabs.watchtower.enable=true
+
+volumes:
+  deskthing-data:
