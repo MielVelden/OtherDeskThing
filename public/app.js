@@ -261,14 +261,6 @@
       setMeter(byId('lab-temp-bar'), (lab.temp - 30) / 70 * 100); // 30-100 °C scale
     }
 
-    var note = byId('lab-note');
-    if (lab.inContainer) {
-      setText(note, 'Running inside Docker: these are the Docker VM’s numbers, not the Mac’s. Run DeskThing natively for real host stats.');
-      show(note, true);
-    } else {
-      show(note, false);
-    }
-
     renderDocker(lab);
   }
 
