@@ -252,10 +252,11 @@
     setMeter(byId('lab-cpu-bar'), lab.cpu);
     setText(byId('lab-load'), lab.load.join('  '));
 
-    if (lab.temp === null || lab.temp === undefined) {
-      setText(byId('lab-temp'), 'n/a');
-      setMeter(byId('lab-temp-bar'), 0);
-    } else {
+    // No temperature source (no macmon, or running in a container): hide the row.
+    var hasTemp = lab.temp !== null && lab.temp !== undefined;
+    // '' falls back to the default display (table-row); 'block' would break the table.
+    byId('lab-temp-row').style.display = hasTemp ? '' : 'none';
+    if (hasTemp) {
       setText(byId('lab-temp'), lab.temp + '°C');
       setMeter(byId('lab-temp-bar'), (lab.temp - 30) / 70 * 100); // 30-100 °C scale
     }
@@ -263,9 +264,6 @@
     var note = byId('lab-note');
     if (lab.inContainer) {
       setText(note, 'Running inside Docker: these are the Docker VM’s numbers, not the Mac’s. Run DeskThing natively for real host stats.');
-      show(note, true);
-    } else if (lab.temp === null || lab.temp === undefined) {
-      setText(note, 'No temperature yet: install macmon on the Mac mini (brew install macmon).');
       show(note, true);
     } else {
       show(note, false);
